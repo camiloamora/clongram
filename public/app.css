@@ -6504,7 +6504,7 @@ body {
 
 .card .fa-heart {
   color: #f44336;
-  display: none; }
+  /*display: none;*/ }
 
 .card .liked .fa-heart {
   display: block; }

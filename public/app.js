@@ -13778,6 +13778,32 @@ module.exports = [
 ]
 
 },{}],48:[function(require,module,exports){
+var yo = require('yo-yo');
+var translate = require('../translate');
+
+var el = yo`<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 l3 center-align"><a href="#" data-activates="dropdown1" class="dropdown-button btn btn-flat">${ translate.message('language') }</a>
+        <ul id="dropdown1" class="dropdown-content">
+          <li><a href="#" onclick=${ lang.bind(null, 'es') }>${ translate.message('spanish') }</a></li>
+          <li><a href="#" onclick=${ lang.bind(null, 'en-US') }>${ translate.message('english') }</a></li>
+        </ul>
+      </div>
+      <div class="col s12 l3 push-l6 center-align">© 2016 Platzigram</div>
+    </div>
+  </div>
+</footer>`;
+
+function lang(locale) {
+  localStorage.locale = locale;
+  location.reload();
+  return false;
+}
+
+document.body.appendChild(el);
+
+},{"../translate":61,"yo-yo":39}],49:[function(require,module,exports){
 var page = require('page');
 var empty = require('empty-element');
 var template = require('./template');
@@ -13810,7 +13836,7 @@ page('/', function (ctx, next) {
 	empty(main).appendChild(template(pictures));
 });
 
-},{"./template":49,"empty-element":3,"page":35,"title":38}],49:[function(require,module,exports){
+},{"./template":50,"empty-element":3,"page":35,"title":38}],50:[function(require,module,exports){
 var yo = require('yo-yo');
 var layout = require('../layout');
 var picture = require('../picture-card');
@@ -13829,7 +13855,7 @@ module.exports = function (pictures) {
 	return layout(el);
 };
 
-},{"../layout":52,"../picture-card":53,"yo-yo":39}],50:[function(require,module,exports){
+},{"../layout":53,"../picture-card":54,"yo-yo":39}],51:[function(require,module,exports){
 /*var numero = [ 400, 200, 1, -23 ];
 
 //sin ecmascript
@@ -13846,10 +13872,11 @@ var page = require('page');
 require('./homepage');
 require('./signup');
 require('./signin');
+require('./footer');
 
 page();
 
-},{"./homepage":48,"./signin":54,"./signup":56,"page":35}],51:[function(require,module,exports){
+},{"./footer":48,"./homepage":49,"./signin":55,"./signup":57,"page":35}],52:[function(require,module,exports){
 var yo = require('yo-yo');
 
 module.exports = function landing(box) {
@@ -13869,8 +13896,9 @@ module.exports = function landing(box) {
 </div>`;
 };
 
-},{"yo-yo":39}],52:[function(require,module,exports){
+},{"yo-yo":39}],53:[function(require,module,exports){
 var yo = require('yo-yo');
+var translate = require('../translate');
 
 module.exports = function layout(content) {
 	return yo`<div>
@@ -13886,7 +13914,7 @@ module.exports = function layout(content) {
 									<i class="fa fa-user" aria-hidden="true"></i>
 									</a>
 									<ul id="drop-user" class="dropdown-content">
-										<li><a href="#">Salir</a></li>
+										<li><a href="#">${ translate.message('logout') }</a></li>
 									</ul>
 								</div>
 							</div>	
@@ -13899,7 +13927,7 @@ module.exports = function layout(content) {
 			</div>`;
 };
 
-},{"yo-yo":39}],53:[function(require,module,exports){
+},{"../translate":61,"yo-yo":39}],54:[function(require,module,exports){
 var yo = require('yo-yo');
 var translate = require('../translate');
 
@@ -13938,7 +13966,7 @@ module.exports = function pictureCard(pic) {
   return el;
 };
 
-},{"../translate":60,"yo-yo":39}],54:[function(require,module,exports){
+},{"../translate":61,"yo-yo":39}],55:[function(require,module,exports){
 var page = require('page');
 var empty = require('empty-element');
 var template = require('./template');
@@ -13950,9 +13978,10 @@ page('/signin', function (ctx, next) {
 	empty(main).appendChild(template);
 });
 
-},{"./template":55,"empty-element":3,"page":35,"title":38}],55:[function(require,module,exports){
+},{"./template":56,"empty-element":3,"page":35,"title":38}],56:[function(require,module,exports){
 var yo = require('yo-yo');
 var landing = require('../landing');
+var translate = require('../translate');
 
 var signinForm = yo`<div class="col s12 m7">
 							<div class="row">
@@ -13960,28 +13989,28 @@ var signinForm = yo`<div class="col s12 m7">
 								<h1 class="clongram">Clongram</h1>
 								<form class="singup-form">
 									<div class="section">
-										<a class="btn btn-fb hide-on-small-only">Iniciar sesión con Facebook</a>
-										<a class="btn btn-fb hide-on-med-and-up"><i class="fa fa-facebook-official"></i>Iniciar sesión</a>
+										<a class="btn btn-fb hide-on-small-only">${ translate.message('signup.facebook') }</a>
+										<a class="btn btn-fb hide-on-med-and-up"><i class="fa fa-facebook-official"></i>${ translate.message('signup.text') }</a>
 									</div>	
 									<div class="divider"></div>
 									<div class="section">
-										<input type="text" name="username" placeholder="Nombre de usuario" />
-										<input type="password" name="password" placeholder="Contraseña" />
-										<button class="btn waves-effect waves-light btn-signup" type="submit">Inicia sesión</button>
+										<input type="text" name="username" placeholder="${ translate.message('username') }" />
+										<input type="password" name="password" placeholder="${ translate.message('password') }" />
+										<button class="btn waves-effect waves-light btn-signup" type="submit">${ translate.message('signup.text') }</button>	
 									</div>
 								</form>
 							</div>	
 						</div>
 						<div class="row">
 							<div class="login-box">
-								¿Tienes una cuenta? <a href="/signup">Registrate</a>
+								${ translate.message('signin.not-have-account') } <a href="/signup">${ translate.message('signup.call-to-action') }</a>
 							</div>
 						</div>
 					</div>`;
 
 module.exports = landing(signinForm);
 
-},{"../landing":51,"yo-yo":39}],56:[function(require,module,exports){
+},{"../landing":52,"../translate":61,"yo-yo":39}],57:[function(require,module,exports){
 var page = require('page');
 var empty = require('empty-element');
 var template = require('./template');
@@ -13993,51 +14022,82 @@ page('/signup', function (ctx, next) {
 	empty(main).appendChild(template);
 });
 
-},{"./template":57,"empty-element":3,"page":35,"title":38}],57:[function(require,module,exports){
+},{"./template":58,"empty-element":3,"page":35,"title":38}],58:[function(require,module,exports){
 var yo = require('yo-yo');
 var landing = require('../landing');
+var translate = require('../translate');
 
 var signupForm = yo`<div class="col s12 m7">
 							<div class="row">
 							<div class="signup-box">
 								<h1 class="clongram">Clongram</h1>
 								<form class="singup-form">
-									<h2>Registrate para ver fotos de tus amigos</h2>
+									<h2>${ translate.message('signup.subheading') }</h2>
 									<div class="section">
-										<a class="btn btn-fb hide-on-small-only">Iniciar sesión con Facebook</a>
-										<a class="btn btn-fb hide-on-med-and-up"><i class="fa fa-facebook-official"></i> Iniciar sesión</a>
+										<a class="btn btn-fb hide-on-small-only">${ translate.message('signup.facebook') }</a>
+										<a class="btn btn-fb hide-on-med-and-up"><i class="fa fa-facebook-official"></i>${ translate.message('signup.text') }</a>
 									</div>	
 									<div class="divider"></div>
 									<div class="section">
-										<input type="email" name="email" placeholder="Correo eléctronico" />
-										<input type="text" name="name" placeholder="Nombre completo" />
-										<input type="text" name="username" placeholder="Nombre de usuario" />
-										<input type="password" name="password" placeholder="Contraseña" />
-										<button class="btn waves-effect waves-light btn-signup" type="submit">Registrate</button>
+										<input type="email" name="email" placeholder="${ translate.message('email') }" />
+										<input type="text" name="name" placeholder="${ translate.message('fullname') }" />
+										<input type="text" name="username" placeholder="${ translate.message('username') }" />
+										<input type="password" name="password" placeholder="${ translate.message('password') }" />
+										<button class="btn waves-effect waves-light btn-signup" type="submit">${ translate.message('signup.call-to-action') }</button>
 									</div>
 								</form>
 							</div>	
 						</div>
 						<div class="row">
 							<div class="login-box">
-								¿Tienes una cuenta? <a href="/signin">Entrar</a>
+								${ translate.message('signup.have-account') } <a href="/signin">${ translate.message('signin') }</a>
 							</div>
 						</div>
 					</div>`;
 
 module.exports = landing(signupForm);
 
-},{"../landing":51,"yo-yo":39}],58:[function(require,module,exports){
+},{"../landing":52,"../translate":61,"yo-yo":39}],59:[function(require,module,exports){
 module.exports = {
-           likes: ' {likes, plural, ' + '=0 {no likes}' + '=1 {# like}' + 'other { # likes}}'
-};
-
-},{}],59:[function(require,module,exports){
-module.exports = {
-  likes: '{ likes, number} me gusta'
+											likes: ' {likes, plural, ' + '=0 {no likes}' + '=1 {# like}' + 'other { # likes}}',
+											'logout': 'Logout',
+											'english': 'English',
+											'spanish': 'Spanish',
+											'signup.subheading': 'Signup to watch pictures',
+											'signup.facebook': 'Signup with Facebook',
+											'signup.text': 'Signup',
+											'email': 'Email',
+											'username': 'Username',
+											'fullname': 'Fullaname',
+											'password': 'Password',
+											'signup.call-to-action': 'Signup',
+											'signup.have-account': 'Already have an account',
+											'signin': 'Signin',
+											'signin.not-have-account': '¿Don\'t have an account?',
+											'language': 'Language'
 };
 
 },{}],60:[function(require,module,exports){
+module.exports = {
+	likes: '{ likes, number} me gusta',
+	'logout': 'Salir',
+	'english': 'Inglés',
+	'spanish': 'Español',
+	'signup.subheading': 'Regístrate para ver fotos',
+	'signup.facebook': 'Iniciar sesión con Facebook',
+	'signup.text': 'Iniciar sesión',
+	'email': 'Correo eléctronico',
+	'username': 'Nombre de usuario',
+	'fullname': 'Nombre completo',
+	'password': 'Contraseña',
+	'signup.call-to-action': 'Regístrate',
+	'signup.have-account': '¿Tienes una cuenta',
+	'signin': 'Entrar',
+	'signin.not-have-account': '¿No tienes una cuenta?',
+	'language': 'Idioma'
+};
+
+},{}],61:[function(require,module,exports){
 var moment = require('moment');
 if (!window.Intl) {
 	window.Intl = require('intl');
@@ -14058,7 +14118,7 @@ var MESSAGES = {};
 MESSAGES.es = es;
 MESSAGES['en-US'] = en;
 
-var locale = 'en-US';
+var locale = localStorage.locale || 'es';
 
 module.exports = {
 	message: function (text, options) {
@@ -14070,4 +14130,4 @@ module.exports = {
 	date: new IntlRelativeFormat(locale)
 };
 
-},{"./en-US":58,"./es":59,"intl":30,"intl-messageformat":4,"intl-relativeformat":15,"intl-relativeformat/dist/locale-data/en.js":13,"intl-relativeformat/dist/locale-data/es.js":14,"intl/locale-data/jsonp/en-US.js":32,"intl/locale-data/jsonp/es.js":33,"moment":34}]},{},[50]);
+},{"./en-US":59,"./es":60,"intl":30,"intl-messageformat":4,"intl-relativeformat":15,"intl-relativeformat/dist/locale-data/en.js":13,"intl-relativeformat/dist/locale-data/es.js":14,"intl/locale-data/jsonp/en-US.js":32,"intl/locale-data/jsonp/es.js":33,"moment":34}]},{},[51]);

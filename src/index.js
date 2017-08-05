@@ -10,6 +10,7 @@ var numerosMas1 = numero.map(n => n + 1)
 console.log(numerosMas1);*/
 
 var page = require('page');
+require('babel-polyfill');
 
 require('./header');
 require('./homepage');
